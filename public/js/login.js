@@ -1,0 +1,39 @@
+import axios from 'axios';
+import { showAlert } from './alert';
+
+export const login = async (email, password) => {
+  try {
+    const { data } = await axios({
+      method: 'POST',
+      url: '/api/v1/users/login',
+      data: {
+        email,
+        password,
+      },
+    });
+
+    if (data.status === 'success') {
+      showAlert('success', 'Logged in succesfully! Redirecting...');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1000);
+    }
+  } catch (error) {
+    showAlert('error', error.response.data.message);
+  }
+};
+
+export const logout = async () => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: '/api/v1/users/logout',
+    });
+
+    if (res.data.status === 'success') {
+      location.assign('/');
+    }
+  } catch (error) {
+    showAlert('Error', 'Error logging out! Please try again.');
+  }
+};
