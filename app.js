@@ -10,6 +10,7 @@ const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const hpp = require('hpp');
 const compression = require('compression');
+const cors = require('cors');
 
 //utils imports
 const AppError = require('./utils/appError');
@@ -79,6 +80,18 @@ app.use(
 );
 
 app.use(compression());
+
+//Implementing CORS
+//* If added in the routes, it only allows it for a specific route
+app.use(cors());
+/* 
+*This is how to use for a specific URL(In case of, let's samy, frontend on another server from the backend)
+app.use(cors({
+  origin: 'http//natours.com'
+}))
+*/
+
+app.options('*', cors());
 
 //Serving static files
 // app.use(express.static(`${__dirname}/public`));
