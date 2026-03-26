@@ -30,3 +30,11 @@ process.on('unhandledRejection', (error) => {
     setTimeout(() => process.exit(1), 3000);
   });
 });
+
+process.on(`SIGTERM`, () => {
+  console.log('👋SIGTERM Received. Shuttig down gracefully.');
+  server.close(() => {
+    console.log('✅ Process sucesfully terminated.');
+  });
+});
+
