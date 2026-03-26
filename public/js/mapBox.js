@@ -1,26 +1,34 @@
-mapboxgl.accessToken = `pk.eyJ1IjoiZGFyaXB0ciIsImEiOiJjbWxxajlpbHQwMTliM2RzbGVsYzh3eHJwIn0.QLTS6TibTMNarwECd4k60g`;
+/* eslint-disable */
 export const displayMap = (locations) => {
-  const map = new mapboxgl.Map({
+  // Verificăm dacă biblioteca s-a încărcat din <script>-ul din Pug
+  if (!window.mapboxgl) return;
+
+  // Folosim window. peste tot pentru a evita ReferenceError
+  window.mapboxgl.accessToken =
+    'pk.eyJ1IjoiZGFyaXB0ciIsImEiOiJjbWxxajlpbHQwMTliM2RzbGVsYzh3eHJwIn0.QLTS6TibTMNarwECd4k60g';
+
+  const map = new window.mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v12',
     scrollZoom: false,
   });
 
-  const bounds = new mapboxgl.LngLatBounds();
+  const bounds = new window.mapboxgl.LngLatBounds();
 
   locations.forEach((loc) => {
-    //add a marker
+    // Adăugare marker
     const el = document.createElement('div');
     el.className = 'marker';
-    new mapboxgl.Marker({
+
+    new window.mapboxgl.Marker({
       element: el,
       anchor: 'bottom',
     })
       .setLngLat(loc.coordinates)
       .addTo(map);
 
-    //add a popup
-    new mapboxgl.Popup({
+    // Adăugare popup
+    new window.mapboxgl.Popup({
       offset: 50,
     })
       .setLngLat(loc.coordinates)
@@ -29,6 +37,7 @@ export const displayMap = (locations) => {
 
     bounds.extend(loc.coordinates);
   });
+
   map.fitBounds(bounds, {
     padding: { top: 200, bottom: 150, left: 100, right: 100 },
   });
