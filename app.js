@@ -25,6 +25,8 @@ const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 
+const bookingController = require('./controllers/bookingController');
+
 const app = express();
 
 app.enable('trust proxy');
@@ -44,6 +46,14 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP! Please try again in one hour.',
 });
 app.use('/api', limiter);
+
+//* Checkout
+//! Always needs to be text, so use before express.json()
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'applications/json' }),
+  bookingController.webhookCheckout,
+);
 
 //Body parser, reading data from the body into req.body
 app.use(
