@@ -51,7 +51,7 @@ app.use('/api', limiter);
 //! Always needs to be text, so use before express.json()
 app.post(
   '/webhook-checkout',
-  express.raw({ type: 'applications/json' }),
+  express.raw({ type: 'application/json' }),
   bookingController.webhookCheckout,
 );
 
