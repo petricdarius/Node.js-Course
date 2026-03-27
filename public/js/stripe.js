@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { showAlert } from './alert';
 
-const stripe = Stripe(`${process.env.STRIPE_PK}`);
-
 export const bookTour = async (tourID) => {
+  const stripe = Stripe(stripePublicKey);
   try {
     //1) Get the session from the server
     const session = await axios(`/api/v1/bookings/checkout-session/${tourID}`);
