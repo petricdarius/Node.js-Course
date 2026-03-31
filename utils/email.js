@@ -4,8 +4,6 @@ const htmlToText = require('html-to-text');
 const pug = require('pug');
 const { convert } = require('html-to-text');
 
-/* This code defines a class named `Email` that is used for sending emails. Here is a breakdown of what
-the code does: */
 module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;

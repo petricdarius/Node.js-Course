@@ -19,6 +19,9 @@ mongoose.connect(DB).then((con) => {
 const PORT = process.env.PORT || 3000;
 
 //Same, if host not specified, localhost is used as default
+/* This code snippet is creating a server instance by calling the `listen` method on the `app` object.
+The `listen` method starts the server and makes it listen on a specified port for incoming HTTP
+requests. */
 const server = app.listen(PORT, () => {
   console.log(`App running on port ${PORT}...`);
 });
